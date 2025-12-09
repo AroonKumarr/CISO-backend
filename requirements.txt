@@ -1,5 +1,7 @@
-# --- Core FastAPI ---
 --extra-index-url https://download.pytorch.org/whl/cpu
+
+torch==2.4.1
+torchaudio==2.4.1
 
 fastapi==0.115.0
 uvicorn==0.30.1
@@ -10,32 +12,13 @@ starlette==0.38.6
 jinja2==3.1.4
 python-dotenv==1.0.1
 tqdm==4.66.5
-
-# --- Data Handling ---
 pandas==2.2.3
 openpyxl==3.1.5
 numpy==1.26.4
-
-# --- PDF/Text Processing ---
 pypdf==4.3.1
 beautifulsoup4==4.12.3
 nltk==3.9.1
-
-# --- Embeddings and Vector DB ---
 sentence-transformers==3.0.1
 scikit-learn==1.5.2
 qdrant-client==1.10.1
-
-# --- Torch CPU-only for embeddings ---
-torch==2.4.1
-torchaudio==2.4.1
--f https://download.pytorch.org/whl/cpu/torch_stable.html
-
-# --- Excel/Document ---
-python-docx==0.8.12  # Needed if you handle DOCX uploads
-
-# --- AI/ML ---
-openai==2.7.2
-
-# --- Authentication & Security ---
-PyJWT==2.8.0
+python-docx==1.0.0
