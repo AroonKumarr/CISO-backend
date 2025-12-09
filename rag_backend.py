@@ -153,6 +153,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 
+)
+
 # ------------------- SERVE FRONTEND -------------------
 @app.get("/")
 def root():
