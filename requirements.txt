@@ -4,6 +4,10 @@ uvicorn==0.30.1
 python-multipart==0.0.9
 requests==2.32.3
 httpx==0.27.2
+starlette==0.38.6
+jinja2==3.1.4
+python-dotenv==1.0.1
+tqdm==4.66.5
 
 # --- Data Handling ---
 pandas==2.2.3
@@ -20,24 +24,16 @@ sentence-transformers==3.0.1
 scikit-learn==1.5.2
 qdrant-client==1.10.1
 
-# --- Audio and Speech (TTS/STT) ---
-sounddevice==0.4.7
-pydub==0.25.1
-SpeechRecognition==3.10.4
-gTTS==2.5.3
-torch==2.4.1
-torchaudio==2.4.1
+# --- Torch CPU-only for embeddings ---
+torch==2.4.1+cpu
+torchaudio==2.4.1+cpu
+-f https://download.pytorch.org/whl/cpu/torch_stable.html
 
-# --- Authentication & Security ---
-PyJWT==2.8.0
-
-# --- Utilities ---
-tqdm==4.66.5
-python-dotenv==1.0.1
-jinja2==3.1.4
+# --- Excel/Document ---
+python-docx==0.8.12  # Needed if you handle DOCX uploads
 
 # --- AI/ML ---
 openai==2.7.2
 
-# --- Web Framework ---
-starlette==0.38.6
+# --- Authentication & Security ---
+PyJWT==2.8.0
