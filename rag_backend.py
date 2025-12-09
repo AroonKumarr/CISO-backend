@@ -146,7 +146,9 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "http://localhost:5173",
-        "https://*.vercel.app"  # All Vercel deployments
+        "https://*.vercel.app",
+        "https://ciso-frontend-fteflchj3-aigilityxs-projects.vercel.app",  # Your specific Vercel URL
+        "https://ciso-backend-production.up.railway.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
