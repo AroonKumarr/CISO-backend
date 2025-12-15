@@ -8,6 +8,17 @@ AIgilityX CISO Advisor Backend:
 - Document upload and intelligent chunking
 """
 
+import requests
+
+BOT_SWITCH_URL = "https://raw.githubusercontent.com/AroonKumarr/CISO-backend/main/bot_status.json"
+
+def is_bot_enabled():
+    try:
+        r = requests.get(BOT_SWITCH_URL, timeout=2)
+        return r.json().get("enabled", False)
+    except:
+        return False
+
 import os
 import re
 import uuid
@@ -16,7 +27,7 @@ import logging
 from typing import List
 from pathlib import Path
 
-import requests
+
 import pandas as pd
 import nltk
 import numpy as np
@@ -363,6 +374,18 @@ async def upload_file(file: UploadFile = File(...)):
     
     logging.info(f"Uploaded {uploaded} chunks to CISO knowledge base")
     return {"status": "ok", "chunks": uploaded, "filename": file.filename}
+
+
+from fastapi.responses import JSONResponse
+
+@app.middleware("http")
+async def bot_switch(request, call_next):
+    if not is_bot_enabled():
+        return JSONResponse(
+            status_code=503,
+            content={"message": "Chatbot is temporarily offline"}
+        )
+    return await call_next(request)
 
 @app.post("/query/")
 async def query(
