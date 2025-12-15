@@ -109,7 +109,8 @@ app.add_middleware(
         "http://localhost:5173",
         "https://*.vercel.app",
         "https://ciso-frontend-fteflchj3-aigilityxs-projects.vercel.app",  # Your specific Vercel URL
-        "https://ciso-backend-production.up.railway.app"
+        "https://ciso-backend-production.up.railway.app/",
+        "https://testing.aigilityx.com"
     ],
     allow_credentials=True,
     allow_methods=["*"],
