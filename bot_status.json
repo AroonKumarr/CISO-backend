@@ -1,1 +1,3 @@
-bot_status.json
+{
+  "enabled": false
+}
