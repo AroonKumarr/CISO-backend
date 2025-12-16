@@ -8,6 +8,9 @@ AIgilityX CISO Advisor Backend:
 - Document upload and intelligent chunking
 """
 
+from utils.document_registry import save_document_name
+
+
 import requests
 
 BOT_SWITCH_URL = "https://raw.githubusercontent.com/AroonKumarr/CISO-backend/main/bot_status.json"
@@ -301,7 +304,9 @@ async def upload_file(file: UploadFile = File(...)):
     file_path = os.path.join(UPLOAD_DIR, file.filename)
     with open(file_path, "wb") as f:
         f.write(await file.read())
-    
+    # ✅ SAVE DOCUMENT NAME (ONCE PER UPLOAD)
+    doc_id = save_document_name(file.filename)
+
     ext = file.filename.lower().split(".")[-1]
     logging.info(f"Processing file type: {ext}")
     
@@ -359,7 +364,15 @@ async def upload_file(file: UploadFile = File(...)):
     
     # Prepare points
     ids = [str(uuid.uuid4()) for _ in unique_chunks]
-    payloads = [{"source_file": file.filename, "text": t} for t in unique_chunks]
+    payloads = [
+    {
+        "doc_id": doc_id,
+        "source_file": file.filename,
+        "text": t
+    }
+    for t in unique_chunks
+]
+
     points = [PointStruct(id=i, vector=v.tolist(), payload=p) for i, v, p in zip(ids, unique_embeddings, payloads)]
     
     # Batched upsert
@@ -386,6 +399,15 @@ async def bot_switch(request, call_next):
             content={"message": "Chatbot is temporarily offline"}
         )
     return await call_next(request)
+
+@app.get("/documents")
+def list_documents():
+    path = Path("data/documents.json")
+    if not path.exists():
+        return []
+    with open(path) as f:
+        return json.load(f)
+
 
 @app.post("/query/")
 async def query(
